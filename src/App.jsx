@@ -46,9 +46,11 @@ function Todo({ id }) {
   const [getItem, setItem] = useState({});
 
   useEffect(() => {
-    axios.get(`https://dummyjson.com/todos/` + id).then((response) => {
-      setItem(response.data);
-    });
+    setTimeout(() => {
+      axios.get(`https://dummyjson.com/todos/` + id).then((response) => {
+        setItem(response.data);
+      });
+    }, 3000);
   }, [id]);
 
   return (
