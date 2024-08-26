@@ -1,44 +1,67 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
 function App() {
+  const [selectedId, setid] = useState(1);
+
   return (
     <div>
-      <Todo id={1} />
-      <Todo id={18} />
-      <Todo id={5} />
-      <Todo id={8} />
-      <Todo id={8} />
-      <Todo id={22} />
+      <button
+        onClick={function () {
+          setid(1);
+        }}
+      >
+        1
+      </button>
+      <button
+        onClick={function () {
+          setid(2);
+        }}
+      >
+        2
+      </button>
+      <button
+        onClick={function () {
+          setid(3);
+        }}
+      >
+        3
+      </button>
+      <button
+        onClick={function () {
+          setid(4);
+        }}
+      >
+        4
+      </button>
+
+      <Todo id={selectedId} />
     </div>
   );
 }
 
 function Todo({ id }) {
-  const [getItem, settodos] = useState({});
+  const [getItem, setItem] = useState({});
 
   useEffect(() => {
-    axios.get("https://dummyjson.com/todos/" + id).then((response) => {
-      settodos(response.data);
-    });
-  }, [id]); // The effect will run whenever the 'id' changes
-
-  useEffect(() => {
-    axios.get("https://dummyjson.com/todos/" + id).then((response) => {
-      settodos(response.data);
+    axios.get(`https://dummyjson.com/todos/` + id).then((response) => {
+      setItem(response.data);
     });
   }, [id]);
 
   return (
     <div>
-      <h1>{getItem.todo}</h1>
+      Id: {id}
+      <h3>{getItem.todo}</h3>
+      {/* <h3>{Item.id}</h3>
+      <h3>{Item.completed}</h3> */}
     </div>
   );
 }
+export default App;
 
 Todo.propTypes = {
   id: PropTypes.number.isRequired,
 };
-
-export default App;
