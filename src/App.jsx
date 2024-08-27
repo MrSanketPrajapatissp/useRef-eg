@@ -1,32 +1,22 @@
-import { memo, useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function App() {
-  const [counter, setCount] = useState(0);
+function useTodos() {
+  const [todos, setTodos] = useState();
 
-  return (
-    <div>
-      <button
-        onClick={() => {
-          setCount(counter + 1);
-        }}
-      >
-        Counter {counter}
-      </button>
+  useEffect(() => {
+    axios.get().then((result) => {
+      setTodos(result.data);
+    });
+  }, []);
 
-      <ButtonComponent />
-    </div>
-  );
+  return todos;
 }
 
-const ButtonComponent = memo(() => {
-  console.log("Child Render");
+function App() {
+  const todos = useTodos();
 
-  return (
-    <div>
-      <button>button Clicked</button>
-    </div>
-  );
-});
+  return <div>{todos}</div>;
+}
 
-ButtonComponent.displayName = "ButtonComponent";
 export default App;
