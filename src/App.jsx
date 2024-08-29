@@ -1,40 +1,33 @@
 import { useState } from "react";
+import CardWrapper from "./CardWrapper";
 import PropTypes from "prop-types";
-const TodoList = ({ todos }) => (
-  <ul>
-    {todos.map((todo) => (
-      <li key={todo.id}>{todo.title}</li>
-    ))}
-  </ul>
-);
-
 const App = () => {
-  const [todos, settodos] = useState([
-    { id: 1, title: "get the books" },
-    { id: 2, title: "go to lib" },
-    { id: 3, title: "Go to gym" },
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      title: "Let me go to gym",
+      content: "earphone",
+    },
   ]);
 
-  const Addtodo = () => {
-    const newTodo = { id: todos.length + 1, title: "new todo title added" };
-    settodos([...todos, newTodo]);
-  };
+  function changeTodo() {
+    setTodos([{ id: 1, title: "Iambusy", content: "phone" }]);
+  }
 
   return (
-    <div>
-      <button onClick={Addtodo}>addTodo</button>
-      <TodoList todos={todos}></TodoList>
-    </div>
+    <CardWrapper>
+      <h2>{todos[0].title}</h2>
+
+      <p>{todos[0].content}</p>
+
+      <button onClick={changeTodo}>changeTodo</button>
+    </CardWrapper>
   );
 };
 
-TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 export default App;
+
+PropTypes.App = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+};
