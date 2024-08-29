@@ -1,22 +1,36 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-function useTodos() {
-  const [todos, setTodos] = useState();
-
-  useEffect(() => {
-    axios.get().then((result) => {
-      setTodos(result.data);
-    });
-  }, []);
-
-  return todos;
-}
+import { memo, useCallback, useState } from "react";
 
 function App() {
-  const todos = useTodos();
+  const [count, setCount] = useState(0);
 
-  return <div>{todos}</div>;
+  const inputFunction = useCallback(() => {
+    console.log("hii there");
+  }, []);
+
+  return (
+    <div>
+      <ButtonComponent inputFunction={inputFunction} />
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        count {count}
+      </button>
+    </div>
+  );
 }
+
+const ButtonComponent = memo((inputFunction) => {
+  console.log("Child Render");
+
+  return (
+    <div>
+      <button>Button Clicked</button>
+    </div>
+  );
+});
+
+ButtonComponent.displayName = ButtonComponent;
 
 export default App;
