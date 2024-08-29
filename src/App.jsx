@@ -1,36 +1,40 @@
-import { memo, useCallback, useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
+const TodoList = ({ todos }) => (
+  <ul>
+    {todos.map((todo) => (
+      <li key={todo.id}>{todo.title}</li>
+    ))}
+  </ul>
+);
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const [todos, settodos] = useState([
+    { id: 1, title: "get the books" },
+    { id: 2, title: "go to lib" },
+    { id: 3, title: "Go to gym" },
+  ]);
 
-  const inputFunction = useCallback(() => {
-    console.log("hii there");
-  }, []);
-
-  return (
-    <div>
-      <ButtonComponent inputFunction={inputFunction} />
-      <button
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        count {count}
-      </button>
-    </div>
-  );
-}
-
-const ButtonComponent = memo((inputFunction) => {
-  console.log("Child Render");
+  const Addtodo = () => {
+    const newTodo = { id: todos.length + 1, title: "new todo title added" };
+    settodos([...todos, newTodo]);
+  };
 
   return (
     <div>
-      <button>Button Clicked</button>
+      <button onClick={Addtodo}>addTodo</button>
+      <TodoList todos={todos}></TodoList>
     </div>
   );
-});
+};
 
-ButtonComponent.displayName = ButtonComponent;
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default App;
