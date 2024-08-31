@@ -1,33 +1,20 @@
-import { useState } from "react";
-import CardWrapper from "./CardWrapper";
-import PropTypes from "prop-types";
-const App = () => {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "Let me go to gym",
-      content: "earphone",
-    },
-  ]);
+import { useState, useRef, useEffect } from "react";
 
-  function changeTodo() {
-    setTodos([{ id: 1, title: "Iambusy", content: "phone" }]);
-  }
+function App() {
+  const [incometax, setIncomeTax] = useState(20000);
+  const divref = useRef();
+
+  useEffect(() => {
+    setTimeout(() => {
+      divref.current.innerHTML = 10;
+    }, 5000);
+  }, []);
 
   return (
-    <CardWrapper>
-      <h2>{todos[0].title}</h2>
-
-      <p>{todos[0].content}</p>
-
-      <button onClick={changeTodo}>changeTodo</button>
-    </CardWrapper>
+    <div>
+      your income tax is : <div ref={divref}>{incometax}</div>
+    </div>
   );
-};
+}
 
 export default App;
-
-PropTypes.App = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-};
